@@ -24,11 +24,21 @@ def divide(a, b):
 
 
 @click.command()
-@click.option('--anum', '-a', type=click.INT)
-@click.option('--bnum', '-b', type=click.INT)
-def main(anum, bnum):
-    print(add(anum, bnum))
-    print(subtract(anum, bnum))
+@click.option('--func', '-f')
+@click.argument('--anum', '-a', type=click.INT)
+@click.argument('--bnum', '-b', type=click.INT)
+def main(func, anum, bnum):
+
+    switcher = {
+        'add': add(anum, bnum),
+        'subtract': subtract(anum, bnum),
+        'multiply': multiply(anum, bnum),
+        'divide': divide(anum, bnum)
+    }
+    print(switcher.get(func, 'Option does not exist'))
+    #
+    # print(add(anum, bnum))
+    # print(subtract(anum, bnum))
 
 
 if __name__ == '__main__':
