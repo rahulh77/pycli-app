@@ -5,10 +5,10 @@ import time
 import random
 from requests.exceptions import HTTPError
 
-NUM_JOBS = 10
+NUM_JOBS = 20
 
 def do_some_work(i):
-    """Get book details using Google Books API (sequentially)"""
+    """Do some work (sequentially)"""
     sleeptime = random.randint(2,5)
     print(f"Task {i}: Sleeping for {sleeptime} seconds.")
     time.sleep(sleeptime)
