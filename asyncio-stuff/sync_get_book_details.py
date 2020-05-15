@@ -1,6 +1,7 @@
 import os
 import requests  
 import json
+import time
 from requests.exceptions import HTTPError
 
 
@@ -25,12 +26,13 @@ def extract_fields_from_response(item):
     subtitle = volume_info.get("subtitle", None)
     description = volume_info.get("description", None)
     published_date = volume_info.get("publishedDate", None)
-    return (
-        title,
-        subtitle,
-        description,
-        published_date,
-    )
+    return item
+    # return (
+    #     title,
+    #     subtitle,
+    #     description,
+    #     published_date,
+    # )
 
 def get_book_details_seq(isbn, session):
     """Get book details using Google Books API (sequentially)"""
@@ -50,11 +52,14 @@ def get_book_details_seq(isbn, session):
 
 
 with requests.Session() as session:
+    start_time = time.time()
     for isbn in LIST_ISBN:
         try:
             response = get_book_details_seq(isbn, session)
             parsed_response = extract_fields_from_response(response)
-            print(f"Response: {json.dumps(parsed_response, indent=2)}")
+            print(f"Response: {json.dumps(parsed_response, indent=4)}")
         except Exception as err:
             print(f"Exception occured: {err}")
             pass
+    end_time = time.time()
+    print('Time Taken: ', time.strftime("%H:%M:%S", time.gmtime(end_time-start_time)))
